@@ -1,6 +1,7 @@
 package com.gildedrose.updater
 
 import com.gildedrose.Item
+import com.gildedrose.updater.strategies.BaseItemUpdater
 
 /**
  *
@@ -13,15 +14,12 @@ class SimpleItemUpdaterFactory {
         val simpleName = item.name
             .lowercase()
 
-        with(item.name) {
-            getItemUpdaterForString()
+        return with(simpleName) {
+            when {
+                contains("") -> BaseItemUpdater
+                else -> BaseItemUpdater
+            }
         }
     }
 
-    // Quite ugly
-    private fun String.getItemUpdaterForString() {
-        when {
-            contains("sulfur") -> ...
-        }
-    }
 }

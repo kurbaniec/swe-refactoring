@@ -2,6 +2,7 @@ package com.gildedrose
 
 import com.gildedrose.Item
 import com.gildedrose.updater.ItemUpdater
+import com.gildedrose.updater.SimpleItemUpdaterFactory
 
 /**
  *
@@ -10,6 +11,7 @@ import com.gildedrose.updater.ItemUpdater
  * @version 2022-09-18
  */
 class GlidedRoseService {
+    private val factory = SimpleItemUpdaterFactory()
 
     fun update(items: Array<Item>) {
         items.forEach { item ->
@@ -24,6 +26,6 @@ class GlidedRoseService {
     }
 
     private fun getItemUpdater(item: Item): ItemUpdater {
-
+        return factory.create(item)
     }
 }
