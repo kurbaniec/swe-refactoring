@@ -1,6 +1,5 @@
 package com.gildedrose
 
-import com.gildedrose.Item
 import com.gildedrose.updater.ItemUpdater
 import com.gildedrose.updater.SimpleItemUpdaterFactory
 

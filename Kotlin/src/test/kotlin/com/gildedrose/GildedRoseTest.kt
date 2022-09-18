@@ -1,14 +1,12 @@
 package com.gildedrose
 
+import com.gildedrose.GildedRose.Constants.MAX_QUALITY
+import com.gildedrose.GildedRose.Constants.MIN_QUALITY
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 internal class GildedRoseTest {
-    object Constants {
-        const val MAX_QUALITY = 50
-        const val MIN_QUALITY = 0
-    }
 
     @Test
     fun `generic item`() {
@@ -27,7 +25,7 @@ internal class GildedRoseTest {
         for (i in 1..20) app.updateQuality()
         val updatedItem = app.items.first()
         assertTrue(updatedItem.sellIn < 0)
-        assertEquals(Constants.MIN_QUALITY, updatedItem.quality)
+        assertEquals(MIN_QUALITY, updatedItem.quality)
     }
 
     @Test
@@ -41,12 +39,21 @@ internal class GildedRoseTest {
     }
 
     @Test
-    fun `generic item wrong initial quality`() {
-        val item = listOf(Item("foo", 10, 100))
+    fun `generic item with more than max quality`() {
+        val item = listOf(Item("+5 Dexterity Vest", 10, MAX_QUALITY + 1))
         val app = GildedRose(item.toTypedArray())
         app.updateQuality()
         val updatedItem = app.items.first()
-        assertEquals(Constants.MAX_QUALITY, updatedItem.quality)
+        assertEquals(MAX_QUALITY, updatedItem.quality)
+    }
+
+    @Test
+    fun `generic item with less than min quality`() {
+        val item = listOf(Item("+5 Dexterity Vest", 10, MIN_QUALITY - 1))
+        val app = GildedRose(item.toTypedArray())
+        app.updateQuality()
+        val updatedItem = app.items.first()
+        assertEquals(MIN_QUALITY, updatedItem.quality)
     }
 
     @Test
@@ -60,7 +67,17 @@ internal class GildedRoseTest {
     }
 
     @Test
-    fun `sulfuras`() {
+    fun `aged brie reaching max quality`() {
+        val item = listOf(Item("Aged Brie", 10, MAX_QUALITY))
+        val app = GildedRose(item.toTypedArray())
+        app.updateQuality()
+        val updatedItem = app.items.first()
+        assertEquals(9, updatedItem.sellIn)
+        assertEquals(MAX_QUALITY, updatedItem.quality)
+    }
+
+    @Test
+    fun sulfuras() {
         val item = listOf(Item("Sulfuras, Hand of Ragnaros", 10, 10))
         val app = GildedRose(item.toTypedArray())
         app.updateQuality()
@@ -105,13 +122,23 @@ internal class GildedRoseTest {
     }
 
     @Test
-    fun `conjured`() {
+    fun conjured() {
         val item = listOf(Item("Conjured Mana Cake", 10, 10))
         val app = GildedRose(item.toTypedArray())
         app.updateQuality()
         val updatedItem = app.items.first()
         assertEquals(9, updatedItem.sellIn)
         assertEquals(8, updatedItem.quality)
+    }
+
+    @Test
+    fun `conjured past sellIn degradation`() {
+        val item = listOf(Item("Conjured Mana Cake", 0, 10))
+        val app = GildedRose(item.toTypedArray())
+        app.updateQuality()
+        val updatedItem = app.items.first()
+        assertTrue(updatedItem.sellIn < 0)
+        assertEquals(6, updatedItem.quality)
     }
 
 }

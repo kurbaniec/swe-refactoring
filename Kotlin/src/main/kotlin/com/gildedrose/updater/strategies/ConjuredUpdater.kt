@@ -12,9 +12,12 @@ import com.gildedrose.utils.limitQuantityIn
  * @author Kacper Urbaniec
  * @version 2022-09-18
  */
-object AgedBrieUpdater : ItemUpdater {
+object ConjuredUpdater : ItemUpdater {
     override fun updateQuality(item: Item): ItemUpdater {
-        ++item.quality
+        val currentQuality = item.quality
+        super.updateQuality(item)
+        val degradation = currentQuality - item.quality
+        item.quality -= degradation
         item.limitQuantityIn(MIN_QUALITY, MAX_QUALITY)
         return this
     }

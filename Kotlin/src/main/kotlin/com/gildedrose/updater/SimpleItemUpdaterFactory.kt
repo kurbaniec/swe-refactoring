@@ -1,7 +1,7 @@
 package com.gildedrose.updater
 
 import com.gildedrose.Item
-import com.gildedrose.updater.strategies.BaseItemUpdater
+import com.gildedrose.updater.strategies.*
 
 /**
  *
@@ -16,10 +16,12 @@ class SimpleItemUpdaterFactory {
 
         return with(simpleName) {
             when {
-                contains("") -> BaseItemUpdater
+                contains("aged brie") -> AgedBrieUpdater
+                contains("sulfuras") -> SulfurasUpdater
+                contains("backstage passes") -> BackstagePassesUpdater
+                contains("conjured") -> ConjuredUpdater
                 else -> BaseItemUpdater
             }
         }
     }
-
 }
