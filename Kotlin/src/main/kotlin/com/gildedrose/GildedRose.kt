@@ -1,6 +1,12 @@
 package com.gildedrose
 
 class GildedRose(var items: Array<Item>) {
+    val service = GlidedRoseService()
+
+    companion object Constants {
+        const val MAX_QUALITY = 50
+        const val MIN_QUALITY = 0
+    }
 
     fun updateQuality() {
         for (i in items.indices) {
