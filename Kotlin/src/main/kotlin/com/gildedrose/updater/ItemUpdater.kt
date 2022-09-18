@@ -1,5 +1,6 @@
 package com.gildedrose.updater
 
+import com.gildedrose.GildedRose
 import com.gildedrose.Item
 
 /**
@@ -10,7 +11,7 @@ import com.gildedrose.Item
  */
 interface ItemUpdater {
     fun updateSellIn(item: Item): ItemUpdater {
-        
+
     } 
     
     fun updateQuality(item: Item): ItemUpdater {
