@@ -11,17 +11,19 @@ import com.gildedrose.updater.strategies.*
  */
 class SimpleItemUpdaterFactory {
     fun create(item: Item): ItemUpdater {
-        val simpleName = item.name
+        val lowercaseName = item.name
             .lowercase()
 
-        return with(simpleName) {
-            when {
-                contains("aged brie") -> AgedBrieUpdater
-                contains("sulfuras") -> SulfurasUpdater
-                contains("backstage passes") -> BackstagePassesUpdater
-                contains("conjured") -> ConjuredUpdater
-                else -> BaseItemUpdater
-            }
+        return getItemUpdater(lowercaseName)
+    }
+
+    private fun getItemUpdater(lowercaseName: String): ItemUpdater {
+        return when {
+            lowercaseName.contains("aged brie") -> AgedBrieUpdater
+            lowercaseName.contains("sulfuras") -> SulfurasUpdater
+            lowercaseName.contains("backstage passes") -> BackstagePassesUpdater
+            lowercaseName.contains("conjured") -> ConjuredUpdater
+            else -> BaseItemUpdater
         }
     }
 }

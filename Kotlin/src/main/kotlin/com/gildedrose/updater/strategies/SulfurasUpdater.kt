@@ -3,7 +3,7 @@ package com.gildedrose.updater.strategies
 import com.gildedrose.GildedRose.Constants.MIN_QUALITY
 import com.gildedrose.Item
 import com.gildedrose.updater.ItemUpdater
-import com.gildedrose.utils.limitQuantityAtLeast
+import com.gildedrose.limitQuantityAtLeast
 
 /**
  *
@@ -13,8 +13,6 @@ import com.gildedrose.utils.limitQuantityAtLeast
  */
 object SulfurasUpdater : ItemUpdater {
     override fun updateSellIn(item: Item): ItemUpdater {
-//        if (item.sellIn != Int.MAX_VALUE)
-//            item.sellIn = Int.MAX_VALUE
         return this
     }
 

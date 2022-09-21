@@ -4,7 +4,7 @@ import com.gildedrose.GildedRose.Constants.MAX_QUALITY
 import com.gildedrose.GildedRose.Constants.MIN_QUALITY
 import com.gildedrose.Item
 import com.gildedrose.updater.ItemUpdater
-import com.gildedrose.utils.limitQuantityIn
+import com.gildedrose.limitQuantityIn
 
 /**
  *
