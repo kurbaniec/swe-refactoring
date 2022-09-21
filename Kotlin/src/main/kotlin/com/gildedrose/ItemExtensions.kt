@@ -39,13 +39,13 @@ fun Item.setQuality(value: Int, minQuality: Int? = null, maxQuality: Int? = null
 
 private fun Item.limitQuality(minimumValue: Int?, maximumValue: Int?) {
     when {
-        minimumValue != null && maximumValue != null -> limitQuality(minimumValue, maximumValue)
+        minimumValue != null && maximumValue != null -> limitQualityIn(minimumValue, maximumValue)
         minimumValue != null && maximumValue == null -> limitQualityAtLeast(minimumValue)
         minimumValue == null && maximumValue != null -> limitQualityAtMost(maximumValue)
     }
 }
 
-fun Item.limitQuality(minimumValue: Int, maximumValue: Int) {
+fun Item.limitQualityIn(minimumValue: Int, maximumValue: Int) {
     quality = quality.coerceIn(minimumValue, maximumValue)
 }
 
