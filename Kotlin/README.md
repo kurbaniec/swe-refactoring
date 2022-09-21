@@ -60,7 +60,7 @@ object AgedBrieUpdater : ItemUpdater {
 
 ---
 
-But how can one acquire  the correct `ItemUpdater` corresponding to an `Item`. I implemented a simple factory that returns `ItemUpdater`s based on the `Item`'s name. 
+But how can one acquire the correct `ItemUpdater` corresponding to an `Item`. I implemented a simple factory that returns `ItemUpdater`s based on the `Item`'s name. 
 
 ```kotlin
 class SimpleItemUpdaterFactory {
@@ -81,7 +81,7 @@ class SimpleItemUpdaterFactory {
 }
 ```
 
-The simple factory is not really a pattern. A factory with a factory method and concrete creator is a pattern but in my opinion it is not required in this simple example and the simple factory class can easily refactored in the future (into a factory method or even abstract factory). The main idea behind the simple factory was to put code that might change in the future (new `ItemUpdater` is needed) in one place.  A side note, the name `create` can be seen as a little misleading as `ItemUpdater`s are returned in the form of singletons and not actually created, but that was just my my take on optimising the code a little.  
+The simple factory is not really a pattern. A factory with a factory method and concrete creator is a pattern but in my opinion it is not required in this simple example and the simple factory class can easily refactored in the future (into a factory method or even abstract factory). The main idea behind the simple factory was to put code that might change in the future (new `ItemUpdater` is needed) in one place.  A side note, the name `create` can be seen as a little misleading as `ItemUpdater`s are returned in the form of singletons and not actually created, but that was just my take on optimising the code a little.  
 
 The `getItemUpdater` kind of breaks some rules of the *Object Calisthenics*. The `when` expression does not exist in Java but is most reminiscent of a `switch` statement. So one needs to use `else` keyword to provide a base case and not the `default` keyword. It is not the same `else` as found in `if/else` and *Object Calisthenics* was (probably?) written before Kotlin was a thing so take this with a grain of salt. But in theory one could rewrite this in Java with a lot of `if` statements and early returns to follow the rules.
 
@@ -118,7 +118,7 @@ class GildedRose(var items: Array<Item>) {
 
 ---
 
-When looking at the *Object Calisthenics*, one can deduce that the `Item` class is breaking some rules. It features more than two instance variables that represent getter/setter properties. The class is also marked explicitly `open` to allow inheritance which is not typical for Kotlin. I thought about using inheritance to solve the Coding Kata, but it would not solve the getter/setter properties problem as these fields are public and cannot be magically removed in a subclass (Liskov Substitution Principle).  Furthermore, in my opinion, idiomatic Kotlin tries to reduce objected oriented aspects a bit and not use inheritance for everything (that is why classes are on default `final`). I could have also wrapped the `Item` in a custom `MyItem` class that uses the `Item` as its state. This would however require to change the `items` property in `GildedRose` or add an additional property that maps `Item`s to `MyItem`s.  It could be an viable alternative solution on its own, but in my opinion, the current "simple factory-item update" architecture would not really benefit from it. 
+When looking at the *Object Calisthenics*, one can deduce that the `Item` class is breaking some rules. It features more than two instance variables that represent getter/setter properties. The class is also marked explicitly `open` to allow inheritance which is not typical for Kotlin. I thought about using inheritance to solve the Coding Kata, but it would not solve the getter/setter properties problem as these fields are public and cannot be magically removed in a subclass (Liskov Substitution Principle).  Furthermore, in my opinion, idiomatic Kotlin tries to reduce objected oriented aspects a bit and not use inheritance for everything (that is why classes are on default `final`). I could have also wrapped the `Item` in a custom `MyItem` class that uses the `Item` as its state. This would however require to change the `items` property in `GildedRose` or add an additional property that maps `Item`s to `MyItem`s.  It could be a viable alternative solution on its own, but in my opinion, the current "simple factory-item update" architecture would not really benefit from it. 
 
 However, I quite liked the "Tell, don't ask" mindset from the "No getters/setters/properties" rule. An object should provide convenient methods so one can interact with the object easily without generating new errors because of misuse of the object. I often had code that looked like the following which broke the  "No getters/setters/properties" & "One dot per line" rule.
 
@@ -164,7 +164,7 @@ override fun updateQuality(item: Item): ItemUpdater {
 
 ---
 
-The rules of the *Object Calisthenics* sometimes contradict each other and the author even admits in the conclusion that one should leverage what is comfortable. The following shows one code snippet in two versions that would either break the "One dot per line" or "One level of indentation per method " rule.
+The rules of the *Object Calisthenics* sometimes contradict each other and the author even admits in the conclusion that one should leverage what is comfortable. The following shows one code snippet in two versions that would either break the "One dot per line" or the "One level of indentation per method " rule.
 
 ```kotlin
 object BackstagePassesUpdater : ItemUpdater {
@@ -198,4 +198,4 @@ object BackstagePassesUpdater : ItemUpdater {
 
 One could rewrite the snippet into lots of `if` statements with early returns, but would that really make the code more readable? In creating the exercise, I also looked at a bit at Dan North's [CUPID](https://dannorth.net/2022/02/10/cupid-for-joyful-coding/#idiomatic). CUPID is an acronym for properties that make code more joyful to work with each property being a trade-off. 
 
-The *I* in CUPID stands for idiomatic, and I think writing code that looks "standardised" or perhaps even "plain" & "generic"  according to language idioms can make it easier to work with. So the first version of `updateQuality` is properly the more idiomatic one, as not every programmer knows the `with` method.
+The I in CUPID stands for idiomatic, and I think writing code that looks "standardised" or perhaps even "plain" & "generic" according to language idioms can make it easier to work with. So the first version of `updateQuality` is properly the more idiomatic one, as not every programmer knows the `with` method.
