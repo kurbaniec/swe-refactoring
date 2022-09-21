@@ -3,7 +3,7 @@ package com.gildedrose.updater.strategies
 import com.gildedrose.GildedRose.Constants.MIN_QUALITY
 import com.gildedrose.Item
 import com.gildedrose.updater.ItemUpdater
-import com.gildedrose.limitQuantityAtLeast
+import com.gildedrose.limitQualityAtLeast
 
 /**
  *
@@ -17,7 +17,7 @@ object SulfurasUpdater : ItemUpdater {
     }
 
     override fun updateQuality(item: Item): ItemUpdater {
-        item.limitQuantityAtLeast(MIN_QUALITY)
+        item.limitQualityAtLeast(MIN_QUALITY)
         return this
     }
 }

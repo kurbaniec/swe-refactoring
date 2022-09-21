@@ -3,7 +3,8 @@ package com.gildedrose.updater
 import com.gildedrose.GildedRose.Constants.MAX_QUALITY
 import com.gildedrose.GildedRose.Constants.MIN_QUALITY
 import com.gildedrose.Item
-import com.gildedrose.limitQuantityIn
+import com.gildedrose.decreaseSellIn
+import com.gildedrose.deteriorateQuality
 
 /**
  *
@@ -13,15 +14,15 @@ import com.gildedrose.limitQuantityIn
  */
 interface ItemUpdater {
     fun updateSellIn(item: Item): ItemUpdater {
-        --item.sellIn
+        item.decreaseSellIn(1)
         return this
     } 
     
     fun updateQuality(item: Item): ItemUpdater {
-        --item.quality
+        var qualityDecrease = 1
         if (item.sellIn < 0)
-            --item.quality
-        item.limitQuantityIn(MIN_QUALITY, MAX_QUALITY)
+            qualityDecrease *= 2
+        item.deteriorateQuality(qualityDecrease, MIN_QUALITY, MAX_QUALITY)
         return this
     }
 }

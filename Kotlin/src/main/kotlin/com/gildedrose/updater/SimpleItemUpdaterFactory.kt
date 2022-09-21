@@ -1,6 +1,7 @@
 package com.gildedrose.updater
 
 import com.gildedrose.Item
+import com.gildedrose.lowercaseName
 import com.gildedrose.updater.strategies.*
 
 /**
@@ -11,9 +12,7 @@ import com.gildedrose.updater.strategies.*
  */
 class SimpleItemUpdaterFactory {
     fun create(item: Item): ItemUpdater {
-        val lowercaseName = item.name
-            .lowercase()
-
+        val lowercaseName = item.lowercaseName()
         return getItemUpdater(lowercaseName)
     }
 

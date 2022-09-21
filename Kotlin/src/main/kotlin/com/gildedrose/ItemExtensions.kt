@@ -7,36 +7,52 @@ package com.gildedrose
  * @version 2022-09-18
  */
 
-fun Item.improveQuality(value: Int, minQuality: Int? = null, maxQuality: Int? = null) {
-    quality += value
-    limitQuantity(minQuality, maxQuality)
+fun Item.lowercaseName(): String {
+    return name.lowercase()
 }
 
-fun Item.detoriateQuality(value: Int, minQuality: Int? = null, maxQuality: Int? = null) {
+fun Item.increaseSellIn(value: Int) {
+    sellIn += value
+}
+
+fun Item.decreaseSellIn(value: Int) {
+    sellIn -= value
+}
+
+fun Item.setSellIn(value: Int) {
+    sellIn = value
+}
+
+fun Item.improveQuality(value: Int, minQuality: Int? = null, maxQuality: Int? = null) {
+    quality += value
+    limitQuality(minQuality, maxQuality)
+}
+
+fun Item.deteriorateQuality(value: Int, minQuality: Int? = null, maxQuality: Int? = null) {
     quality -= value
-    limitQuantity(minQuality, maxQuality)
+    limitQuality(minQuality, maxQuality)
 }
 fun Item.setQuality(value: Int, minQuality: Int? = null, maxQuality: Int? = null) {
     quality = value
-    limitQuantity(minQuality, maxQuality)
+    limitQuality(minQuality, maxQuality)
 }
 
-fun Item.limitQuantity(minimumValue: Int?, maximumValue: Int?) {
+private fun Item.limitQuality(minimumValue: Int?, maximumValue: Int?) {
     when {
-        minimumValue != null && maximumValue != null -> limitQuantityIn(minimumValue, maximumValue)
-        minimumValue != null && maximumValue == null -> limitQuantityAtLeast(minimumValue)
-        minimumValue == null && maximumValue != null -> limitQuantityAtLeast(maximumValue)
+        minimumValue != null && maximumValue != null -> limitQuality(minimumValue, maximumValue)
+        minimumValue != null && maximumValue == null -> limitQualityAtLeast(minimumValue)
+        minimumValue == null && maximumValue != null -> limitQualityAtMost(maximumValue)
     }
 }
 
-fun Item.limitQuantityIn(minimumValue: Int, maximumValue: Int) {
+fun Item.limitQuality(minimumValue: Int, maximumValue: Int) {
     quality = quality.coerceIn(minimumValue, maximumValue)
 }
 
-fun Item.limitQuantityAtLeast(minimumValue: Int) {
+fun Item.limitQualityAtLeast(minimumValue: Int) {
     quality = quality.coerceAtLeast(minimumValue)
 }
 
-fun Item.limitQuantityAtMost(maximumValue: Int) {
+fun Item.limitQualityAtMost(maximumValue: Int) {
     quality = quality.coerceAtMost(maximumValue)
 }
